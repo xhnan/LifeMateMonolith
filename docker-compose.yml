@@ -1,0 +1,12 @@
+services:
+  lifemate:
+    image: eclipse-temurin:17-jdk
+    container_name: lifemate-monolith
+    ports:
+      - "9653:9000"
+    volumes:
+      - ./target/LifeMateMonolith.jar:/app/app.jar
+      - ./config/application.properties:/app/config/application.properties
+    working_dir: /app
+    command: ["java", "-jar", "app.jar", "--spring.config.location=file:/app/config/application.properties"]
+    restart: always

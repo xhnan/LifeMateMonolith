@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xhn.ledger.mapper.LedgerCategoryMapper">
+
+    <select id="getCategoryList" resultType="com.xhn.ledger.model.LedgerCategoryDTO">
+        SELECT *
+        FROM ledger_category
+        WHERE user_id = #{userId}
+    </select>
+</mapper>
