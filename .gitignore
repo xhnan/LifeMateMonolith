@@ -37,3 +37,7 @@ build/
 mvnw
 mvnw.cmd
 .mvn
+
+/logs
+# Logs
+logs/

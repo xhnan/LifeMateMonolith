@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
  * </p>
  *
  * @author xhn
- * @since 2025-07-10
+ * @since 2025-07-22
  */
 @Getter
 @Setter
@@ -68,4 +68,16 @@ public class LedgerCategory implements Serializable {
      */
     @TableField("updated_time")
     private LocalDateTime updatedTime;
+
+    /**
+     * 图标
+     */
+    @TableField("icon_code")
+    private String iconCode;
+
+    /**
+     * 颜色
+     */
+    @TableField("color_value")
+    private String colorValue;
 }

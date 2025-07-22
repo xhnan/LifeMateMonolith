@@ -46,7 +46,13 @@ public class LedgerCategoryController {
     }
 
     @PostMapping("/add")
-    public ResponseResult<String> add(@RequestBody LedgerCategoryDTO ledgerCategoryDTO) {
+    public ResponseResult<String> add(@RequestBody LedgerCategoryDTO ledgerCategoryDTO,@CurrentSecurityContext SecurityContext securityContext) {
+        if (ledgerCategoryDTO.getCategoryName() == null || ledgerCategoryDTO.getCategoryName().isEmpty()) {
+            return ResponseResult.error("分类名称不能为空");
+        }
+        ledgerCategoryDTO.setId(null); // 确保添加时ID为null
+        String userId = securityContext.getAuthentication().getPrincipal().toString();
+        ledgerCategoryDTO.setUserId(Long.valueOf(userId));
         boolean save = ledgerCategoryService.save(ledgerCategoryDTO);
         if (save) {
             return ResponseResult.success("添加成功");
@@ -56,4 +62,35 @@ public class LedgerCategoryController {
 
     }
 
+    @PostMapping("/update")
+    public ResponseResult<String> update(@RequestBody LedgerCategoryDTO ledgerCategoryDTO, @CurrentSecurityContext SecurityContext securityContext) {
+        if (ledgerCategoryDTO.getId() == null) {
+            return ResponseResult.error("分类ID不能为空");
+        }
+        if (ledgerCategoryDTO.getCategoryName() == null || ledgerCategoryDTO.getCategoryName().isEmpty()) {
+            return ResponseResult.error("分类名称不能为空");
+        }
+
+        String userId = securityContext.getAuthentication().getPrincipal().toString();
+        ledgerCategoryDTO.setUserId(Long.valueOf(userId));
+        boolean update = ledgerCategoryService.updateById(ledgerCategoryDTO);
+        if (update) {
+            return ResponseResult.success("更新成功");
+        } else {
+            return ResponseResult.error("更新失败");
+        }
+    }
+    @PostMapping("/delete")
+    public ResponseResult<String> delete(@RequestBody LedgerCategoryDTO ledgerCategoryDTO) {
+        if (ledgerCategoryDTO.getId() == null) {
+            return ResponseResult.error("分类ID不能为空");
+        }
+
+        boolean remove = ledgerCategoryService.removeById(ledgerCategoryDTO.getId());
+        if (remove) {
+            return ResponseResult.success("删除成功");
+        } else {
+            return ResponseResult.error("删除失败");
+        }
+    }
 }
