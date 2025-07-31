@@ -29,7 +29,7 @@ public class JavaCodeGenerate {
         String path = JavaCodeGenerate.class.getProtectionDomain().getCodeSource().getLocation().getPath();
         java.io.File file = new java.io.File(path);
         String moduleRoot = file.getParentFile().getParent();
-        String moduleName = "ledger";
+        String moduleName = "study";
 
         Properties props = loadProperties("application-dev.properties");
 
