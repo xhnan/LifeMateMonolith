@@ -81,7 +81,8 @@ public class StudyDailyStatServiceImpl extends ServiceImpl<StudyDailyStatMapper,
 
         LambdaQueryWrapper<StudyDailyStat> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(StudyDailyStat::getUserId, statDTO.getUserId())
-                .eq(StudyDailyStat::getStatDate, statDTO.getStatDate());
+                .eq(StudyDailyStat::getStatDate, statDTO.getStatDate())
+                .eq(StudyDailyStat::getCategory, statDTO.getCategory()); // 按分类区分
 
         StudyDailyStat existingStat = this.getOne(queryWrapper);
 
