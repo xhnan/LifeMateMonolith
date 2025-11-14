@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xhn.sys.mapper.AppVersionMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.xhn.sys.model.AppVersionEntity">
+        <id column="id" property="id" />
+        <result column="platform" property="platform" />
+        <result column="version" property="version" />
+        <result column="build_number" property="buildNumber" />
+        <result column="is_force_update" property="isForceUpdate" />
+        <result column="download_url" property="downloadUrl" />
+        <result column="changelog" property="changelog" />
+        <result column="release_date" property="releaseDate" />
+        <result column="created_time" property="createdTime" />
+        <result column="updated_time" property="updatedTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, platform, version, build_number, is_force_update, download_url, changelog, release_date, created_time, updated_time
+    </sql>
+
+</mapper>
