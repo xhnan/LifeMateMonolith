@@ -27,6 +27,7 @@ public class ResponseResult<T> implements Serializable {
      */
     private Integer code;
 
+    private boolean success;
     /**
      * 消息
      */
@@ -37,6 +38,8 @@ public class ResponseResult<T> implements Serializable {
      */
     private T data;
 
+
+
     /**
      * 成功返回结果
      * @param data 返回数据
@@ -44,7 +47,7 @@ public class ResponseResult<T> implements Serializable {
      * @return 返回结果
      */
     public static <T> ResponseResult<T> success(T data) {
-        return new ResponseResult<>(200, "操作成功", data);
+        return new ResponseResult<>(200, true,"操作成功", data);
     }
 
     /**
@@ -55,7 +58,7 @@ public class ResponseResult<T> implements Serializable {
      * @return 返回结果
      */
     public static <T> ResponseResult<T> success(String message, T data) {
-        return new ResponseResult<>(200, message, data);
+        return new ResponseResult<>(200, true,message, data);
     }
 
     /**
@@ -66,7 +69,7 @@ public class ResponseResult<T> implements Serializable {
      * @return 返回结果
      */
     public static <T> ResponseResult<T> failed(Integer errorCode, String message) {
-        return new ResponseResult<>(errorCode, message, null);
+        return new ResponseResult<>(errorCode, false,message, null);
     }
 
     /**
@@ -76,7 +79,7 @@ public class ResponseResult<T> implements Serializable {
      * @return 返回结果
      */
     public static <T> ResponseResult<T> error(String message) {
-        return new ResponseResult<>(500, message, null);
+        return new ResponseResult<>(500,false, message, null);
     }
 
     /**
@@ -86,7 +89,7 @@ public class ResponseResult<T> implements Serializable {
      * @return 返回结果
      */
     public static <T> ResponseResult<T> validateFailed(String message) {
-        return new ResponseResult<>(400, message, null);
+        return new ResponseResult<>(400,false, message, null);
     }
 
     /**
@@ -95,7 +98,7 @@ public class ResponseResult<T> implements Serializable {
      * @return 返回结果
      */
     public static <T> ResponseResult<T> unauthorized() {
-        return new ResponseResult<>(401, "暂未登录或token已过期", null);
+        return new ResponseResult<>(401,false, "暂未登录或token已过期", null);
     }
 
     /**
@@ -105,7 +108,7 @@ public class ResponseResult<T> implements Serializable {
      * @return 返回结果
      */
     public static <T> ResponseResult<T> unauthorized(String message) {
-        return new ResponseResult<>(401, message, null);
+        return new ResponseResult<>(401,false, message, null);
     }
 
     /**
@@ -114,6 +117,6 @@ public class ResponseResult<T> implements Serializable {
      * @return 返回结果
      */
     public static <T> ResponseResult<T> forbidden() {
-        return new ResponseResult<>(403, "没有相关权限", null);
+        return new ResponseResult<>(403, false,"没有相关权限", null);
     }
 }

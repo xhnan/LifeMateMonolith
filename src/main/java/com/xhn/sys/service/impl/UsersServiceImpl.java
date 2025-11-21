@@ -3,6 +3,7 @@ package com.xhn.sys.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.xhn.sys.model.UsersEntity;
 import com.xhn.sys.mapper.UsersMapper;
+import com.xhn.sys.service.IMenusService;
 import com.xhn.sys.service.IUsersService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,10 @@ public class UsersServiceImpl extends ServiceImpl<UsersMapper, UsersEntity> impl
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+
+    @Autowired
+    IMenusService menusService;
+
     /**
      * 初始化用户
      * @return
@@ -49,19 +54,7 @@ public class UsersServiceImpl extends ServiceImpl<UsersMapper, UsersEntity> impl
                 .setStatus(true)
                 .setCreatedAt(LocalDateTime.now())
                 .setUpdatedAt(LocalDateTime.now());
-
-
-
-
-
-
-
-
-
-
-
-
-
+        menusService.initMenu();
         return this.save(user);
     }
 
