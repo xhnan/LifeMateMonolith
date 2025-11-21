@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
  * </p>
  *
  * @author xhn
- * @since 2025-11-14
+ * @since 2025-11-21
  */
 @Getter
 @Setter
@@ -68,4 +68,9 @@ public class BaseUsersEntity implements Serializable {
      * 更新时间
      */
     private LocalDateTime updatedAt;
+
+    /**
+     * 头像https://picsum.photos/600/400
+     */
+    private String avatar;
 }

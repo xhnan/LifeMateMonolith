@@ -65,7 +65,7 @@ public class AuthController {
             );
 
             if (user == null) {
-                return ResponseResult.failed(401, "用户名或密码错误");
+                return ResponseResult.failed(401, "用户不存在");
             }
 
             // 验证密码
@@ -81,7 +81,11 @@ public class AuthController {
             String token = jwtUtil.generateToken(user.getUsername(), claims);
 
             LoginResponseModel result = new LoginResponseModel();
-
+            result.setToken(token);
+            result.setUsername(user.getUsername());
+            result.setAvatar(user.getAvatar());
+            result.setNickname(user.getUsername());
+            result.setExpire(jwtUtil.getExpirationDate(token));
 
             return ResponseResult.success("登录成功", result);
         });

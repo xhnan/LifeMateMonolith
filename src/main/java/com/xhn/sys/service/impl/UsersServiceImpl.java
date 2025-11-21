@@ -44,7 +44,7 @@ public class UsersServiceImpl extends ServiceImpl<UsersMapper, UsersEntity> impl
         if (existing != null) {
             return false;
         }
-        String password = "admin"; //管理员默认admin
+        String password = "admin123"; //管理员默认admin
         //加密--使用security的加密
         String encode = passwordEncoder.encode(password);
 
@@ -54,7 +54,7 @@ public class UsersServiceImpl extends ServiceImpl<UsersMapper, UsersEntity> impl
                 .setStatus(true)
                 .setCreatedAt(LocalDateTime.now())
                 .setUpdatedAt(LocalDateTime.now());
-        menusService.initMenu();
+//        menusService.initMenu();
         return this.save(user);
     }
 

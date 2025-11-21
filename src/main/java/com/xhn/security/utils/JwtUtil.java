@@ -52,6 +52,13 @@ public class JwtUtil {
                 .parseClaimsJws(token);
     }
 
+
+    public Date getExpirationDate(String token) {
+        Claims claims = parseToken(token).getBody();
+        return claims.getExpiration();
+
+    }
+
     /**
      * 验证 token 是否有效
      *
