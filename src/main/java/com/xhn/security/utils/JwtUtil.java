@@ -38,6 +38,18 @@ public class JwtUtil {
                 .compact();
     }
 
+
+    public String generateRefreshToken(String subject) {
+        long now = System.currentTimeMillis();
+        long refreshExpirationMillis = 1000L * 60 * 60 * 24 * 7; // 7 天
+        return Jwts.builder()
+                .setSubject(subject)
+                .setIssuedAt(new Date(now))
+                .setExpiration(new Date(now + refreshExpirationMillis))
+                .signWith(key, SignatureAlgorithm.HS256)
+                .compact();
+    }
+
     /**
      * 解析 JWT token
      *

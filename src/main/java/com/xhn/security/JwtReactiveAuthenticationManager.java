@@ -37,8 +37,9 @@ public class JwtReactiveAuthenticationManager implements ReactiveAuthenticationM
 //                                .roles(List.of("ROLE_USER")) // 可选：从 claims 解析实际角色
 //                                .displayName(claims.get("name", String.class))
 //                                .build();
+                        Long userId=claims.get("userId", Long.class);
 
-                        PrincipalInfo principalInfo = PrincipalInfo.builder(0L, username)
+                        PrincipalInfo principalInfo = PrincipalInfo.builder(userId, username)
                                 .roles(List.of("ROLE_USER"))
                                 .displayName(claims.get("name", String.class))
                                 .build();

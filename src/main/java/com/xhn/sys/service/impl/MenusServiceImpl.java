@@ -2,9 +2,13 @@ package com.xhn.sys.service.impl;
 
 import com.xhn.sys.model.MenusEntity;
 import com.xhn.sys.mapper.MenusMapper;
+import com.xhn.sys.model.MenusModel;
 import com.xhn.sys.service.IMenusService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <p>
@@ -107,5 +111,74 @@ public class MenusServiceImpl extends ServiceImpl<MenusMapper, MenusEntity> impl
         // loginButton.setComponent("permission/button/perms");
         this.save(loginButton);
 
+    }
+
+    @Override
+    public List<MenusModel> getUserMenus(Long userId) {
+        //
+
+//        baseMapper.getMenusByUserId(userId);
+        //{
+        //     *   path: "/permission",
+        //     *   meta: {
+        //     *     title: "权限管理",
+        //     *     icon: "ep:lollipop",
+        //     *     rank: 10
+        //     *   },
+        //     *   children: [
+        //     *     {
+        //     *       path: "/permission/page/index",
+        //     *       name: "PermissionPage",
+        //     *       meta: {
+        //     *         title: "页面权限",
+        //     *         roles: ["admin", "common"]
+        //     *       }
+        //     *     },
+        //     *     {
+        //     *       path: "/permission/button",
+        //     *       meta: {
+        //     *         title: "按钮权限",
+        //     *         roles: ["admin", "common"]
+        //     *       },
+        //     *       children: [
+        //     *         {
+        //     *           path: "/permission/button/router",
+        //     *           component: "permission/button/index",
+        //     *           name: "PermissionButtonRouter",
+        //     *           meta: {
+        //     *             title: "路由返回按钮权限",
+        //     *             auths: [
+        //     *               "permission:btn:add",
+        //     *               "permission:btn:edit",
+        //     *               "permission:btn:delete"
+        //     *             ]
+        //     *           }
+        //     *         },
+        //     *         {
+        //     *           path: "/permission/button/login",
+        //     *           component: "permission/button/perms",
+        //     *           name: "PermissionButtonLogin",
+        //     *           meta: {
+        //     *             title: "登录接口返回按钮权限"
+        //     *           }
+        //     *         }
+        //     *       ]
+        //     *     }
+        //     *   ]
+        //     * }
+
+        return List.of();
+    }
+
+    @Override
+    public List<MenusModel> getAllMenus() {
+        //维护页面的菜单管理 principalInfo
+        List<MenusEntity> menusEntities = baseMapper.selectList(null);
+        // 组合诚为树形结构返回给前端 MenusModel
+        List<MenusModel> menusModels = new ArrayList<>();
+
+
+
+        return List.of();
     }
 }

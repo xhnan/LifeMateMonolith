@@ -79,6 +79,7 @@ public class AuthController {
             claims.put("username", user.getUsername());
 
             String token = jwtUtil.generateToken(user.getUsername(), claims);
+            String refreshToken = jwtUtil.generateRefreshToken(user.getUsername());
 
             LoginResponseModel result = new LoginResponseModel();
             result.setToken(token);
@@ -86,6 +87,7 @@ public class AuthController {
             result.setAvatar(user.getAvatar());
             result.setNickname(user.getUsername());
             result.setExpire(jwtUtil.getExpirationDate(token));
+            result.setRefreshToken(refreshToken);
 
             return ResponseResult.success("登录成功", result);
         });

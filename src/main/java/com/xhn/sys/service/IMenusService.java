@@ -2,6 +2,9 @@ package com.xhn.sys.service;
 
 import com.xhn.sys.model.MenusEntity;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.xhn.sys.model.MenusModel;
+
+import java.util.List;
 
 /**
  * <p>
@@ -16,4 +19,7 @@ public interface IMenusService extends IService<MenusEntity> {
 
     public void initMenu();
 
+    List<MenusModel> getUserMenus(Long userId);
+
+    List<MenusModel> getAllMenus();
 }
