@@ -86,7 +86,7 @@ public class AuthController {
             result.setUsername(user.getUsername());
             result.setAvatar(user.getAvatar());
             result.setNickname(user.getUsername());
-            result.setExpire(jwtUtil.getExpirationDate(token));
+            result.setExpires(jwtUtil.getExpirationDate(token));
             result.setRefreshToken(refreshToken);
 
             return ResponseResult.success("登录成功", result);

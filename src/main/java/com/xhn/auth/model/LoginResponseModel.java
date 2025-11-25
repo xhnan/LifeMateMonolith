@@ -19,6 +19,6 @@ public class LoginResponseModel implements Serializable {
     private String nickname;
     private List<String> roles;
     private List<String> permissions;
-    private Date expire;
+    private Date expires;
     private String avatar;
 }
