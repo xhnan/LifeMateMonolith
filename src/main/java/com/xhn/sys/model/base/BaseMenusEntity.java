@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
  * </p>
  *
  * @author xhn
- * @since 2025-11-21
+ * @since 2025-11-26
  */
 @Getter
 @Setter
@@ -80,4 +80,14 @@ public class BaseMenusEntity implements Serializable {
      * 路由组件
      */
     private String component;
+
+    /**
+     * 菜单类型 1菜单，2iframe 3 外链 4按钮
+     */
+    private Integer menuType;
+
+    /**
+     * 菜单名称
+     */
+    private String menuName;
 }

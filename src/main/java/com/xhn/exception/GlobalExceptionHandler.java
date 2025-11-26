@@ -11,6 +11,15 @@ public class GlobalExceptionHandler {
 
     Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
+
+    @ExceptionHandler(ApplicationException.class)
+    public ResponseResult<Void> handleApplicationException(ApplicationException e) {
+        logger.error("业务异常: {}", e.getMessage(), e);
+        return ResponseResult.failed(e.getCode(), e.getMessage());
+    }
+
+
+
     @ExceptionHandler(BusinessException.class)
     public ResponseResult<Void> handleBusinessException(BusinessException e) {
         logger.error("业务异常: {}", e.getMessage(), e);
