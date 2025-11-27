@@ -12,8 +12,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.Comparator;
+import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -120,44 +119,78 @@ public class MenusServiceImpl extends ServiceImpl<MenusMapper, MenusEntity> impl
 
     }
 
-    @Override
+
+    /**
+     * 获取用户菜单
+     *
+     * @param userId 用户ID
+     * @return 用户菜单列表
+     */
     public List<RouterModel> getUserMenus(Long userId) {
-        List<MenusEntity>  menusEntities = baseMapper.selectList(null);
+        // 查询所有菜单数据
+        List<MenusEntity> menusEntities = baseMapper.selectList(null);
+        if (menusEntities == null || menusEntities.isEmpty()) {
+            return Collections.emptyList();  // 如果没有菜单数据，返回空列表
+        }
+
+        // 处理 parentId 为 null 的情况，使用一个默认值 -1 代替 null
+        Map<Long, List<MenusEntity>> menusMap = menusEntities.stream()
+                .collect(Collectors.groupingBy(menu -> menu.getParentId() == null ? -1 : menu.getParentId()));
+
         List<RouterModel> routerModels = new ArrayList<>();
-        List<MenusEntity> list = menusEntities.stream().filter(menu -> menu.getParentId() == null).toList();
-        for (MenusEntity menusEntity : list) {
-            RouterModel router = getUserMenuChildren(menusEntity, menusEntities);
-            routerModels.add(router);
+        // 获取根菜单项（parentId == -1）
+        List<MenusEntity> rootMenus = menusMap.get(-1L);
+
+        if (rootMenus != null) {
+            for (MenusEntity menu : rootMenus) {
+                RouterModel router = getUserMenuChildren(menu, menusMap);
+                routerModels.add(router);
+            }
         }
 
         return routerModels;
     }
 
-
-    public RouterModel getUserMenuChildren(MenusEntity parent, List<MenusEntity> allMenus) {
-        RouterModel router = convertToRouter(parent);
-        router.setChildren(new ArrayList<>());
-
-        // 如果 parent.id 为 null，无法匹配子节点，直接返回
-        if (parent.getId() == null) {
-            return router;
+    /**
+     * 递归获取菜单的子菜单
+     *
+     * @param parent   父菜单
+     * @param menusMap 所有菜单按 parentId 分组后的映射
+     * @return 菜单路由模型
+     */
+    public RouterModel getUserMenuChildren(MenusEntity parent, Map<Long, List<MenusEntity>> menusMap) {
+        if (parent == null) {
+            return null;  // 如果 parent 为 null，直接返回 null
         }
 
-        List<MenusEntity> childEntities = allMenus.stream()
-                .filter(menu -> parent.getId().equals(menu.getParentId()))
-                .toList();
+        // 转换为路由模型
+        RouterModel router = convertToRouter(parent);
+        router.setChildren(new ArrayList<>());  // 初始化 children 列表
 
-        if (!childEntities.isEmpty()) {
+        // 获取子菜单列表
+        List<MenusEntity> childEntities = menusMap.get(parent.getId());
+
+        if (childEntities != null && !childEntities.isEmpty()) {
             List<RouterModel> childRouters = new ArrayList<>();
             for (MenusEntity childEntity : childEntities) {
-                RouterModel childRouter = getUserMenuChildren(childEntity, allMenus);
-                childRouters.add(childRouter);
+                RouterModel childRouter = getUserMenuChildren(childEntity, menusMap);
+                if (childRouter != null) {
+                    childRouters.add(childRouter);
+                }
             }
-            router.setChildren(childRouters);
+
+            // 如果有子菜单，设置子菜单列表
+            if (!childRouters.isEmpty()) {
+                router.setChildren(childRouters);
+            } else {
+                // 如果没有子菜单，可以将 children 设置为 null 或者空列表，依据前端需求
+                router.setChildren(null);
+            }
         }
 
         return router;
     }
+
 
 
     private RouterModel convertToRouter(MenusEntity entity) {
@@ -174,6 +207,9 @@ public class MenusServiceImpl extends ServiceImpl<MenusMapper, MenusEntity> impl
         meta.setTitle(entity.getTitle());
         meta.setIcon(entity.getIcon());
         meta.setRank(entity.getRank());
+
+        meta.setRoles(new ArrayList<>());
+        meta.setAuths(new ArrayList<>());
         // 若实体中存在角色/权限字段，可在此解析并设置到 meta 的 roles/auths
         router.setMeta(meta);
 

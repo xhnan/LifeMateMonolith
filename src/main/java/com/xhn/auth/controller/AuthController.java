@@ -18,8 +18,7 @@ import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 认证控制器 - WebFlux 响应式
@@ -88,6 +87,12 @@ public class AuthController {
             result.setNickname(user.getUsername());
             result.setExpires(jwtUtil.getExpirationDate(token));
             result.setRefreshToken(refreshToken);
+            List<String> roles = new ArrayList<>();
+            roles.add("admin");
+            result.setRoles(roles);
+            Set<String> permissions = new HashSet<>();
+            permissions.add("*:*:*");
+            result.setPermissions(permissions);
 
             return ResponseResult.success("登录成功", result);
         });

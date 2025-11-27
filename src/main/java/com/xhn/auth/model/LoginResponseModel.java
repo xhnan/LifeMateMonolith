@@ -5,6 +5,7 @@ import lombok.Data;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author xhn
@@ -18,7 +19,7 @@ public class LoginResponseModel implements Serializable {
     private String refreshToken;
     private String nickname;
     private List<String> roles;
-    private List<String> permissions;
+    private Set<String> permissions;
     private Date expires;
     private String avatar;
 }
